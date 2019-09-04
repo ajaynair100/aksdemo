@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: captureorder
+spec:
+  selector:
+      matchLabels:
+        app: captureorder
+  replicas: 0
+  template:
+      metadata:
+        labels:
+            app: captureorder
+      spec:
+        containers:
+        - name: captureorder
+          image: acr100.azurecr.io/captureorder
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /healthz
+            initialDelaySeconds: 60
+            periodSeconds: 120
+            timeoutSeconds: 60
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /healthz
+            initialDelaySeconds: 45
+            periodSeconds: 5
+            timeoutSeconds: 60
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+          - name: TEAMNAME
+            value: 'team-azch' # will be patched at deployment time by value of 'teamName' in the variable group
+          - name: MONGOHOST
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: mongoHost
+          - name: MONGOUSER
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: mongoUser
+          - name: MONGOPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: mongoPassword
+          ports:
+          - containerPort: 80
