@@ -20,10 +20,16 @@ spec:
             httpGet:
               port: 8080
               path: /healthz
+            initialDelaySeconds: 60
+            periodSeconds: 120
+            timeoutSeconds: 60
           livenessProbe:
             httpGet:
               port: 8080
               path: /healthz
+            initialDelaySeconds: 45
+            periodSeconds: 5
+            timeoutSeconds: 60
           resources:
             requests:
               memory: "64Mi"
