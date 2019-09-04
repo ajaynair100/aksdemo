@@ -9,4 +9,4 @@ spec:
     name: captureorder
   minReplicas: 2
   maxReplicas: 4
-  targetCPUUtilizationPercentage: 80
+  targetCPUUtilizationPercentage: 50
