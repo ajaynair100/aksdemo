@@ -9,4 +9,6 @@ spec:
     name: captureorder
   minReplicas: 2
   maxReplicas: 4
+  minReadySeconds: 5
+  progressDeadlineSeconds: 120
   targetCPUUtilizationPercentage: 50
