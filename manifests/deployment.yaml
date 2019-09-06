@@ -13,7 +13,7 @@ spec:
             app: captureorder
       spec:
         containers:
-        - name: captureorder
+        - name: captureorder:master-20190716.4
           image: acr100.azurecr.io/captureorder
           imagePullPolicy: Always
           readinessProbe:
